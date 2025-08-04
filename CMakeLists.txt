@@ -12,11 +12,30 @@ file(GLOB UI_FILES "./UIFile/*.ui")
 file(GLOB SOURCES "./Source/*.cpp")
 file(GLOB HEADERS "./Header/*.h")
 
+file(GLOB JPG_FILES 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}  # 关键：添加RELATIVE参数
+    "Resources/images/*.jpg"
+)
+file(GLOB JPEG_FILES 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    "Resources/images/*.jpeg"
+)
+file(GLOB PNG_FILES 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    "Resources/images/*.png"
+)
+file(GLOB ICO_FILES 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    "Resources/images/*.ico"
+)
+
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/UIFile 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
     ${CMAKE_CURRENT_SOURCE_DIR}/Header
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+set(IMAGE_FILES ${JPG_FILES} ${JPEG_FILES} ${PNG_FILES} ${ICO_FILES})
 
 qt_add_executable(Learning_project
     ${SOURCES}
@@ -25,6 +44,13 @@ qt_add_executable(Learning_project
     main.cpp
     mainwindow.ui
 )
+
+qt_add_resources(Learning_project "app_resources"
+    PREFIX "/"
+    FILES ${IMAGE_FILES}
+)
+
+target_link_libraries(Learning_project PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 target_include_directories(Learning_project PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Header
