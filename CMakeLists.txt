@@ -8,28 +8,38 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
-file(GLOB UI_FILES "./UIFile/*.ui")
-file(GLOB SOURCES "./Source/*.cpp")
-file(GLOB HEADERS "./Header/*.h")
+file(GLOB_RECURSE UI_FILES "./UIFile/*.ui")
+file(GLOB_RECURSE SOURCES "./Source/*.cpp")
+file(GLOB_RECURSE HEADERS "./Header/*.h")
 
-file(GLOB JPG_FILES 
+file(GLOB ROOT_CPP "*.cpp")  
+file(GLOB ROOT_H "*.h")
+file(GLOB ROOT_UI "*.ui")  
+
+list(APPEND SOURCES ${ROOT_CPP})
+list(APPEND HEADERS ${ROOT_H})
+list(APPEND UI_FILES ${ROOT_UI})
+
+
+file(GLOB_RECURSE JPG_FILES 
     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}  # 关键：添加RELATIVE参数
     "Resources/images/*.jpg"
 )
-file(GLOB JPEG_FILES 
+file(GLOB_RECURSE JPEG_FILES 
     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     "Resources/images/*.jpeg"
 )
-file(GLOB PNG_FILES 
+file(GLOB_RECURSE PNG_FILES 
     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     "Resources/images/*.png"
 )
-file(GLOB ICO_FILES 
+file(GLOB_RECURSE ICO_FILES 
     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     "Resources/images/*.ico"
 )
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/UIFile 
+set(CMAKE_AUTOUIC_SEARCH_PATHS 
+    ${CMAKE_CURRENT_SOURCE_DIR}/UIFile
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
     ${CMAKE_CURRENT_SOURCE_DIR}/Header
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -41,8 +51,6 @@ qt_add_executable(Learning_project
     ${SOURCES}
     ${HEADERS}
     ${UI_FILES}
-    main.cpp
-    mainwindow.ui
 )
 
 qt_add_resources(Learning_project "app_resources"
