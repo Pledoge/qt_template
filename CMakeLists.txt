@@ -8,9 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
-file(GLOB_RECURSE UI_FILES "./UIFile/*.ui")
-file(GLOB_RECURSE SOURCES "./Source/*.cpp")
-file(GLOB_RECURSE HEADERS "./Header/*.h")
+file(GLOB_RECURSE UI_FILES "UIFile/*.ui")
+file(GLOB_RECURSE SOURCES "Source/*.cpp")
+file(GLOB_RECURSE HEADERS "Header/*.h")
 
 file(GLOB ROOT_CPP "*.cpp")  
 file(GLOB ROOT_H "*.h")
@@ -66,8 +66,6 @@ target_include_directories(Learning_project PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-target_link_libraries(Learning_project PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 set_target_properties(Learning_project PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
