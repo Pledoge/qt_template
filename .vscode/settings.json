@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "*.c": "c",
+        "*.tpp": "cpp",
+        "*.m": "matlab",
+        "chrono": "cpp",
+        "optional": "cpp",
+        "format": "cpp",
+        "system_error": "cpp",
+        "new": "cpp",
+        "qvboxlayout": "cpp",
+        "qcolordialog": "cpp"
+    }
+}

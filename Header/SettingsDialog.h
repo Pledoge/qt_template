@@ -14,6 +14,7 @@ class SettingsDialog : public QDialog {
 
 public:
   explicit SettingsDialog(QWidget *parent = nullptr);
+  ~SettingsDialog();
 
 private:
   Ui::SettingsDialog *ui;

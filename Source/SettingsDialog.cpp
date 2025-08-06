@@ -9,3 +9,5 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 void SettingsDialog::onSaveButtonClicked() {
   // Do nothing
 }
+
+SettingsDialog::~SettingsDialog() { delete ui; }
