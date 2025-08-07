@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Learning_project VERSION 0.1 LANGUAGES CXX)
+set(PROJECT_NAME qt_project)
+
+project(${PROJECT_NAME} VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -47,35 +49,51 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
 
 set(IMAGE_FILES ${JPG_FILES} ${JPEG_FILES} ${PNG_FILES} ${ICO_FILES})
 
-qt_add_executable(Learning_project
+message(STATUS "=== 构建配置信息 ===")
+message(STATUS "项目名称: ${PROJECT_NAME}")
+message(STATUS "项目版本: ${PROJECT_VERSION}")
+message(STATUS "Qt版本: ${QT_VERSION}")
+message(STATUS "C++标准: ${CMAKE_CXX_STANDARD}")
+message(STATUS "构建类型: ${CMAKE_BUILD_TYPE}")
+
+qt_add_executable(${PROJECT_NAME}
     ${SOURCES}
     ${HEADERS}
     ${UI_FILES}
 )
 
-qt_add_resources(Learning_project "app_resources"
+qt_add_resources(${PROJECT_NAME} "app_resources"
     PREFIX "/"
     FILES ${IMAGE_FILES}
 )
 
-target_link_libraries(Learning_project PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-target_include_directories(Learning_project PRIVATE
+target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Header
     ${CMAKE_CURRENT_SOURCE_DIR}/UIFile
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-set_target_properties(Learning_project PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E echo ""
+    COMMAND ${CMAKE_COMMAND} -E echo "Building ${PROJECT_NAME} version ${PROJECT_VERSION}..."
+    COMMAND ${CMAKE_COMMAND} -E echo "Using Qt version ${QT_VERSION}"
+    COMMAND ${CMAKE_COMMAND} -E echo "C++ standard: ${CMAKE_CXX_STANDARD}"
+    COMMAND ${CMAKE_COMMAND} -E echo "Build type: ${CMAKE_BUILD_TYPE}"
+    COMMAND ${CMAKE_COMMAND} -E echo "Executable path: ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}"
+    COMMAND ${CMAKE_COMMAND} -E cmake_echo_color --green "Build completed successfully!")
+
 include(GNUInstallDirs)
-install(TARGETS Learning_project
+install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
