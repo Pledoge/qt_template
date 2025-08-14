@@ -1,7 +1,5 @@
 #include "mainwindow.h"
-#include "Icons/CircleIcon.h"
 #include "SettingsDialog.h"
-#include "UIContainer.h"
 #include "ui_mainwindow.h"
 
 void openSettingsDialog() {
@@ -16,9 +14,6 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
           &QPushButton::click);
   QPixmap logo(":/Resources/images/head.jpg");
   setWindowIcon(QIcon(logo));
-
-  UIContainer *circleContainer = new UIContainer(this);
-  circleContainer->show();
 }
 
 Widget::~Widget() { delete ui; }
